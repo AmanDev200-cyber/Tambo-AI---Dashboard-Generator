@@ -1,0 +1,8 @@
+{
+  "name": "Tambo AI - Dashboard Generator",
+  "description": "A domain-agnostic dashboard generation system that converts natural language queries into interactive, high-fidelity data visualizations using the Gemini AI orchestration layer.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}
