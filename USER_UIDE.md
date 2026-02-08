@@ -44,23 +44,30 @@ Clone the repository:
 ```bash
 git clone https://github.com/AmanDev200-cyber/Tambo-AI---Dashboard-Generator.git
 cd Tambo-AI---Dashboard-Generator
+```
 Install dependencies:
-
+```bash
 npm install
 # or
 yarn install
-3.2 Environment Setup
-Create a .env file in the project root:
+```
+### 3.2 Environment Setup
 
+Create a .env file in the project root:
+```bash
 VITE_GEMINI_API_KEY=your_google_gemini_api_key
 The application will not run without a valid API key.
-
-3.3 Run the Application
+```
+### 3.3 Run the Application
+```bash
 npm run dev
+```
 Open your browser and go to:
-
+```bash
 http://localhost:3000
-4. Understanding the Interface
+```
+## 4. Understanding the Interface
+```text
 The interface is divided into simple functional areas:
 
 Header Area
@@ -86,16 +93,18 @@ Explainability Panel
 Shows why certain charts or layouts were chosen
 
 Displays confidence information
-
-5. Uploading Data
+```
+## 5. Uploading Data
+```text
 Supported Formats
 .csv
 
 .xlsx
 
 .xls
-
-Steps to Upload Data
+```
+### Steps to Upload Data
+```text
 Click the upload button
 
 Select a CSV or Excel file from your system
@@ -105,8 +114,9 @@ Wait for the file to be parsed
 The system analyzes column names and data types
 
 Ensure column names are clear and data is consistent.
-
-6. Generating Dashboards
+```
+## 6. Generating Dashboards
+```text
 After uploading data, users can generate dashboards using natural language.
 
 Example Prompt
@@ -121,8 +131,9 @@ Visualizations are selected based on data types
 A dashboard is generated automatically
 
 No manual chart configuration is required.
-
-7. Interacting with Dashboards
+```
+## 7. Interacting with Dashboards
+```text
 Once generated, dashboards may include:
 
 Interactive charts
@@ -134,8 +145,9 @@ Sliders for simple what-if simulations
 Hover tooltips for additional details
 
 All interactions update in real time based on available data.
-
-8. Explainability & Metrics
+```
+## 8. Explainability & Metrics
+```text
 Tambo AI provides transparency into AI decisions:
 
 Explainability
@@ -157,8 +169,9 @@ Layout reasoning
 Rendering
 
 This helps users trust and understand the output.
-
-9. Error Handling & Recovery
+```
+## 9. Error Handling & Recovery
+```
 Missing API Key
 The app will not start
 
@@ -177,8 +190,9 @@ Validation Halts
 Triggered by unclear schema or inconsistent data
 
 Users are guided to fix column names or data types
-
-10. Mobile & Responsive Behavior
+```
+## 10. Mobile & Responsive Behavior
+```
 The interface adapts to smaller screens
 
 Charts stack vertically on mobile devices
@@ -197,9 +211,9 @@ Upload clean, well-structured data
 Write clear and specific prompts
 
 Focus on one analytical goal per prompt
-
-12. Current Limitations
-Single dataset upload only
+```
+## 12. Current Limitations
+```Single dataset upload only
 
 No live database connections
 
@@ -208,8 +222,9 @@ Limited advanced statistical modeling
 No export to PDF or PowerPoint
 
 Requires manual refresh after re-uploading data
-
-13. Frequently Asked Questions
+```
+## 13. Frequently Asked Questions
+```
 Q: Does the system modify my data?
 No. Data is read-only and never altered.
 
@@ -221,9 +236,10 @@ No. All interactions are done using file uploads and text prompts.
 
 Q: Is this a production analytics tool?
 No. It is intended for learning, experimentation, and demonstrations.
-
-14. Summary
+```
+## 14. Summary
+```
 Tambo AI – Generative Dashboard Generator is a transparent, data-trust-focused tool that helps users turn structured data into interactive dashboards using AI. It emphasizes explainability, prevents hallucinations, and provides a beginner-friendly way to explore data-driven insights.
 
 The application is best suited for educational use, demos, and exploratory analytics.
-
+```
