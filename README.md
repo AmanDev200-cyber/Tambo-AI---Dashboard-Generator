@@ -198,5 +198,5 @@ Update documentation if behavior changes
 MIT License
 Free to use, modify, and distribute.
 
-## User Guide
+## 📃User Guide
 ### Check out the USER_GUIDE.md in this repo
