@@ -77,7 +77,7 @@ Displays **why** a layout or visualization was chosen, with confidence levels.
 ---
 
 ## 📁 **Repository Structure**
-
+```text
 ├── public/                     # Static assets
 ├── src/
 │   ├── components/            # UI components (Upload, Charts, Panels)
@@ -87,6 +87,7 @@ Displays **why** a layout or visualization was chosen, with confidence levels.
 │   └── App.tsx                # Main application entry
 ├── package.json
 └── README.md
+```
 
 ## 💡 **Installation**
 
