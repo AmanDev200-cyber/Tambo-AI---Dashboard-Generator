@@ -1,140 +1,200 @@
-📊 Tambo AI Dashboard Generator
+# 📊 **Tambo AI Dashboard Generator**
 
-A generative UI dashboard builder powered by AI — designed to let users upload data and automatically generate interactive analytics dashboards using AI-driven visualization and layout reasoning.
+## **🚀 AI-Powered Generative Analytics Dashboards**
 
-This project uses modern React + Tailwind + AI orchestration to transform raw inputs into meaningful dashboards with minimal configuration.
+**Tambo AI Dashboard Generator** is a **generative UI dashboard builder powered by AI**.  
+It allows users to upload structured datasets and instantly generate **interactive, explainable analytics dashboards** using **AI-driven visualization and layout reasoning**.
 
-🚀 Features
+Built with **modern React, Tailwind CSS, and AI orchestration**, Tambo AI transforms **raw data into meaningful insights** with minimal configuration.
 
-🧠 Generative Dashboard Creation
-Automatically constructs dashboards from dataset inputs and natural language prompts.
+---
 
-📄 CSV/Excel Ingestion
-Upload structured data and let the system infer schema and insights.
+## 📚 **Table of Contents**
 
-📈 AI-Powered Visualization
-Uses AI to mathematically select appropriate chart types (heatmaps, area charts, etc.).
+- 📌 Introduction  
+- 🚀 Features  
+- 🧱 Tech Stack  
+- 📁 Repository Structure  
+- 💡 Installation  
+- ▶️ Run Locally  
+- 🎯 Usage  
+- 🧪 Error Handling  
+- ⚙️ How It Works  
+- 🛡️ Design Principles  
+- 🧠 Future Enhancements  
+- 🤝 Contributing  
+- 📜 License  
 
-🔐 Strict Data Trust Mode
-Prevents hallucination by only using verified data from the user file.
+---
 
-📊 Interactive Charts & What-If Simulations
+## 📌 **Introduction**
+
+Tambo AI enables users to:
+
+- 📂 Upload **CSV or Excel** datasets  
+- 🗣️ Describe analytics needs in **natural language**  
+- 📊 Instantly receive **AI-generated dashboards** with:
+  - Interactive charts  
+  - What-if simulations  
+  - Explainability & confidence scores  
+
+🔒 The system **strictly relies on verified user data**, ensuring **zero hallucinations**.
+
+---
+
+## 🚀 **Features**
+
+### 🧠 **Generative Dashboard Creation**
+Automatically builds dashboards from datasets and natural language prompts.
+
+### 📄 **CSV / Excel Ingestion**
+Upload structured data and let the system infer schema, metrics, and relationships.
+
+### 📈 **AI-Powered Visualization**
+AI selects optimal chart types such as **heatmaps, bar charts, and area charts**.
+
+### 🔐 **Strict Data Trust Mode**
+Prevents hallucinations by **only using verified user-provided data**.
+
+### 📊 **Interactive Charts & What-If Simulations**
 Real-time sliders and scenario modeling embedded in dashboards.
 
-📐 Explainability & Confidence Scores
-Shows why a particular layout was chosen and the confidence behind it.
+### 📐 **Explainability & Confidence Scores**
+Displays **why** a layout or visualization was chosen, with confidence levels.
 
-🧱 Tech Stack
-Layer	Technology
-Frontend	React, Tailwind CSS
-AI Orchestration	Google Gemini API
-Data Parsing	PapaParse, XLSX
-Visualization	Recharts, D3, React-Simple-Maps
-State & UI	React hooks + custom components
-📁 Repository Structure
+---
 
-Typical folder layout (inferred):
+## 🧱 **Tech Stack**
+
+| Layer | Technology |
+|------|-----------|
+| **Frontend** | React, Tailwind CSS |
+| **AI Orchestration** | Google Gemini API |
+| **Data Parsing** | PapaParse, XLSX |
+| **Visualization** | Recharts, D3, React-Simple-Maps |
+| **State & UI** | React Hooks + Custom Components |
+
+---
+
+## 📁 **Repository Structure**
 
 ├── public/                     # Static assets
 ├── src/
 │   ├── components/            # UI components (Upload, Charts, Panels)
-│   ├── services/              # API clients and orchestration logic
+│   ├── services/              # API clients and AI orchestration logic
 │   ├── hooks/                 # Custom hooks for UI + AI integration
-│   ├── styles/                # Tailwind config + CSS
+│   ├── styles/                # Tailwind config + global CSS
 │   └── App.tsx                # Main application entry
 ├── package.json
 └── README.md
 
-💡 Installation
-1. Clone the Project
+## 💡 **Installation**
+
+### 1️⃣ **Clone the Repository**
+
+```bash
 git clone https://github.com/AmanDev200-cyber/Tambo-AI---Dashboard-Generator.git
 cd Tambo-AI---Dashboard-Generator
-
-2. Install Dependencies
+```
+## 2️⃣ Install Dependencies
+```bash
 npm install
 # or
 yarn install
+```
+## 3️⃣ Environment Variables
+```bash
+Create a .env file in the root directory:
 
-3. Add Environment Variables
+VITE_GEMINI_API_KEY=your_google_gemini_api_key
+```
+⚠️ Important:
+The application will not run without a valid Gemini API key.
 
-Copy the example .env (if present) and add your keys:
-
-VITE_GEMINI_API_KEY=<<your_google_gemini_api_key>>
-
-
-Make sure the key is valid — orchestration will fail without it.
-
-🚀 Run Locally
+## ▶️ Run Locally
+```bash
 npm run dev
-
-
-Then open your browser at:
+```
+```bash
+Open your browser at:
 
 http://localhost:3000
+```
+## 🎯 Usage
+### 📂 Upload Data
+Upload a CSV or Excel file using the upload button.
 
-🎯 Usage
-Upload Data
-
-Use the upload button to select a CSV or Excel file.
-
-Generate Dashboard
-
-Enter a natural language query, e.g.:
-
+## 🧠 Generate Dashboard
+###
+Enter a natural language prompt, for example:
+```text
 Show me churn risk for Q3
 
+What the AI Does
+🔍 Infer schema and metrics
 
-The AI will infer schema and generate an interactive dashboard.
+📊 Choose optimal visualizations
+
+⚡ Generate an interactive dashboard
 
 🧪 Error Handling
-
-Common errors you might encounter:
-
 ❗ Invalid API Key
-Make sure your Gemini key is set in .env and restarted.
+Ensure VITE_GEMINI_API_KEY is set correctly
 
-❗ Schema inference fails
-Ensure your data columns are clearly named and consistent.
+Restart the development server after making changes
 
-📊 How It Works
+❗ Schema Inference Failure
+Use clear and descriptive column names
 
-Data Ingestion
-File parsed using PapaParse/XLSX.
+Avoid mixed data types within a single column
+```
 
-Schema Inference
-Deduce types, unique values, and relationships.
+## ⚙️ How It Works
+```text
+1️⃣ Data Ingestion
+CSV and Excel files are parsed using PapaParse and XLSX
 
-AI Layout Orchestration
-Send schema and intent to Gemini API.
+2️⃣ Schema Inference
+Detects column types, distributions, and relationships
 
-Interactive Rendering
-Render dashboard and built-in simulation panels.
+3️⃣ AI Layout Orchestration
+Schema and user intent are sent to the Gemini API
+
+4️⃣ Interactive Rendering
+Dashboards are rendered with interactive charts and simulation controls
 
 🛡️ Design Principles
+✅ Explainable Outputs – Every AI decision includes clear reasoning
 
-Explainable Outputs – All AI decisions come with confidence scores.
+❌ No Hallucinations – Missing data triggers a Data Requirement Card
 
-No Hallucinations – If data is missing, user sees a Data Requirement Card.
+📱 Mobile-Responsive – Adaptive layouts for all screen sizes
+```
+## 🧠 Future Enhancements
 
-Mobile-Responsive – Adaptive panel behavior for smartphones & tablets.
-
-🧠 Future Enhancements
-Feature	Status
+### Feature	Status
+```text
 Multi-source joins	Planned
-Voice-activation	Planned
+
+Voice activation	Planned
+
 Live DB connectors (Snowflake, Postgres)	Planned
+
 Downloadable reports	Idea
-🤝 Contributing
+```
+## 🤝 Contributing
 
 Contributions are welcome!
-Before opening a pull request, please check:
+Before opening a pull request:
 
-Coding style and conventions
+Follow coding conventions
 
-Add tests where appropriate
+Add tests where applicable
 
-Update this README with any new behavior
+Update documentation if behavior changes
 
-📜 License
+## 📜 License
 
-MIT License — free to use and modify.
+MIT License
+Free to use, modify, and distribute.
+
