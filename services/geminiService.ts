@@ -44,7 +44,7 @@ async function withRetry<T>(fn: () => Promise<T>, maxRetries = 3): Promise<T> {
       lastError = error;
       const errorMsg = error?.message || "";
       const isRateLimit = errorMsg.includes('429') || errorMsg.includes('RESOURCE_EXHAUSTED') || error?.status === 429;
-      
+
       if (isRateLimit && i < maxRetries - 1) {
         // Exponential backoff: 1s, 2s, 4s... with some jitter
         const delay = Math.pow(2, i) * 1000 + Math.random() * 1000;
@@ -95,7 +95,7 @@ function cleanAndHealJson(raw: string): string {
 }
 
 export async function orchestrateGenerativeUI(
-  query: string, 
+  query: string,
   currentLayout: DashboardLayout | null,
   interaction?: InteractionContext,
   file?: File,
@@ -105,29 +105,31 @@ export async function orchestrateGenerativeUI(
   // Using gemini-3-pro-preview for complex UI orchestration and reasoning tasks
   const model = 'gemini-3-pro-preview';
   const currentVersion = (currentLayout?.version || 0) + 1;
-  const ai = getAIClient();
-
-  const promptParts: any[] = [{ 
+  const promptParts: any[] = [{
     text: `${ARCHITECT_SYSTEM_PROMPT}
-    REQUEST: ${query || "Data analysis workspace"}
-    MODE: ${isRegenerating ? "REGENERATE_DIVERSITY_EXPLORATION" : "INITIAL_ORCHESTRATION"}
-    DATA_SOURCE_CONTEXT: ${detectedSource ? JSON.stringify({
+     REQUEST: ${query || "Data analysis workspace"}
+     MODE: ${isRegenerating ? "REGENERATE_DIVERSITY_EXPLORATION" : "INITIAL_ORCHESTRATION"}
+     DATA_SOURCE_CONTEXT: ${detectedSource ? JSON.stringify({
       type: detectedSource.type,
       label: detectedSource.label,
       hints: detectedSource.hints
     }) : "NO SOURCE PROVIDED - REQUEST DATA"}
-    EXISTING_LAYOUT: ${currentLayout ? JSON.stringify(currentLayout.components.map(c => ({ id: c.id, type: c.type, title: c.title, pos: c.gridConfig }))) : "None"}
-    EVENT: ${interaction ? JSON.stringify(interaction) : "None"}`
+     EXISTING_LAYOUT: ${currentLayout ? JSON.stringify(currentLayout.components.map(c => ({ id: c.id, type: c.type, title: c.title, pos: c.gridConfig }))) : "None"}
+     EVENT: ${interaction ? JSON.stringify(interaction) : "None"}`
   }];
 
   try {
+    const ai = getAIClient();
+    if (!process.env.API_KEY) {
+      throw new Error("GEMINI_API_KEY not found. Please set it in your .env file.");
+    }
     // Explicitly typing the response to fix 'unknown' type error
     const response: GenerateContentResponse = await withRetry(() => ai.models.generateContent({
       model,
       contents: { parts: promptParts },
       config: {
         responseMimeType: "application/json",
-        temperature: isRegenerating ? 0.4 : 0.1, 
+        temperature: isRegenerating ? 0.4 : 0.1,
         responseSchema: {
           type: Type.OBJECT,
           properties: {
@@ -163,7 +165,7 @@ export async function orchestrateGenerativeUI(
                     properties: { x: { type: Type.NUMBER }, y: { type: Type.NUMBER }, w: { type: Type.NUMBER }, h: { type: Type.NUMBER } },
                     required: ["x", "y", "w", "h"]
                   },
-                  props: { 
+                  props: {
                     type: Type.OBJECT,
                     properties: {
                       unit: { type: Type.STRING },
@@ -190,26 +192,27 @@ export async function orchestrateGenerativeUI(
     return layout;
   } catch (error: any) {
     console.error("Orchestration failed after retries", error);
-    
+
     const errorMsg = error?.message || "";
-    const isQuotaError = errorMsg.includes('429') || errorMsg.includes('RESOURCE_EXPAUSTED') || error?.status === 429;
-    
+    const isQuotaError = errorMsg.includes('429') || errorMsg.includes('RESOURCE_EXHAUSTED') || error?.status === 429;
+    const isMissingKey = errorMsg.includes('GEMINI_API_KEY not found') || errorMsg.includes('API Key must be set');
+
     return {
       id: "error",
-      name: isQuotaError ? "API Rate Limit Exceeded" : "Data Trust Violation",
+      name: isQuotaError ? "API Rate Limit Exceeded" : (isMissingKey ? "Missing API Key" : "Data Trust Violation"),
       version: currentVersion,
       components: [{
-        id: "err", 
-        type: "InsightCard", 
-        title: isQuotaError ? "Quota Limit Reached" : "Validation Halt", 
+        id: "err",
+        type: "InsightCard",
+        title: isQuotaError ? "Quota Limit Reached" : (isMissingKey ? "Configuration Required" : "Validation Halt"),
         gridConfig: { x: 0, y: 0, w: 12, h: 4 },
-        props: { 
-          summary: isQuotaError 
+        props: {
+          summary: isQuotaError
             ? "The Gemini API rate limit has been reached. Please wait a few seconds or use your own paid API key to continue high-frequency analysis."
-            : "Analysis aborted to maintain data integrity. The provided input does not contain the verified fields required for this operation.",
-          requiredFields: ["Validated Source"],
+            : (isMissingKey ? "The Gemini API Key is missing. Please create a .env file in the project root and add GEMINI_API_KEY=your_key_here." : "Analysis aborted to maintain data integrity. The provided input does not contain the verified fields required for this operation."),
+          requiredFields: isMissingKey ? ["Valid API Config"] : ["Validated Source"],
           impact: 'high',
-          suggestedAction: isQuotaError ? "Switch to Personal API Key" : "Clarify Data Requirements"
+          suggestedAction: isQuotaError ? "Switch to Personal API Key" : (isMissingKey ? "Configure Environment" : "Clarify Data Requirements")
         }
       }]
     };
@@ -219,23 +222,24 @@ export async function orchestrateGenerativeUI(
 export async function* chatWithGeminiStream(query: string, history: { role: 'user' | 'assistant', content: string }[]) {
   const model = 'gemini-3-flash-preview';
   const contents = [...history.map(h => ({ role: h.role === 'user' ? 'user' : 'model', parts: [{ text: h.content }] })), { role: 'user', parts: [{ text: query }] }];
-  const ai = getAIClient();
+
   try {
+    const ai = getAIClient();
     const stream = await ai.models.generateContentStream({
-      model, contents, 
+      model, contents,
       config: { systemInstruction: CHATBOT_SYSTEM_PROMPT, temperature: 0.2 }
     });
     // Casting chunk to GenerateContentResponse to fix typing errors in stream iteration
-    for await (const chunk of stream) { 
+    for await (const chunk of stream) {
       const c = chunk as GenerateContentResponse;
-      if (c.text) yield c.text; 
+      if (c.text) yield c.text;
     }
-  } catch (error: any) { 
+  } catch (error: any) {
     const errorMsg = error?.message || "";
     if (errorMsg.includes('429') || errorMsg.includes('RESOURCE_EXHAUSTED') || error?.status === 429) {
       yield "Rate limit exceeded. Please wait a moment or switch to your own paid API key for better throughput.";
     } else {
-      yield "Connection error. Please check your network and try again."; 
+      yield "Connection error. Please check your network and try again.";
     }
   }
 }

@@ -1,48 +1,40 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tambo AI | Universal Dashboard Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-      @keyframes shimmer {
-        0% { background-position: -1000px 0; }
-        100% { background-position: 1000px 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tambo AI | Universal Dashboard Generator</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @keyframes shimmer {
+      0% {
+        background-position: -1000px 0;
       }
-      .shimmer {
-        animation: shimmer 2s infinite linear;
-        background: linear-gradient(to right, #f1f5f9 4%, #e2e8f0 25%, #f1f5f9 36%);
-        background-size: 1000px 100%;
+
+      100% {
+        background-position: 1000px 0;
       }
-      .drop-zone-active {
-        border-color: #3b82f6;
-        background-color: #eff6ff;
-        transform: scale(1.02);
-      }
-    </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@19.0.0",
-    "react-dom": "https://esm.sh/react-dom@19.0.0",
-    "react-dom/client": "https://esm.sh/react-dom@19.0.0/client",
-    "@google/genai": "https://esm.sh/@google/genai@1.40.0",
-    "recharts": "https://esm.sh/recharts@2.15.0?external=react,react-dom",
-    "react-simple-maps": "https://esm.sh/react-simple-maps@3.0.0?external=react,react-dom",
-    "d3-geo": "https://esm.sh/d3-geo@3.1.1",
-    "d3-scale": "https://esm.sh/d3-scale@4.0.2",
-    "papaparse": "https://esm.sh/papaparse@5.4.1",
-    "xlsx": "https://esm.sh/xlsx@0.18.5",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
+    }
+
+    .shimmer {
+      animation: shimmer 2s infinite linear;
+      background: linear-gradient(to right, #f1f5f9 4%, #e2e8f0 25%, #f1f5f9 36%);
+      background-size: 1000px 100%;
+    }
+
+    .drop-zone-active {
+      border-color: #3b82f6;
+      background-color: #eff6ff;
+      transform: scale(1.02);
+    }
+  </style>
+
 </head>
+
 <body class="bg-slate-50 text-slate-900 h-screen overflow-hidden">
-    <div id="root" class="h-full"></div>
+  <div id="root" class="h-full"></div>
+  <script type="module" src="/index.tsx"></script>
 </body>
+
 </html>
